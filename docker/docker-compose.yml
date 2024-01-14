@@ -30,12 +30,14 @@ services:
     image: turkuazsengul/login:latest
     depends_on:
       - config-server
+      - mongodb
     ports:
       - '8091:8091'
   images:
     image: turkuazsengul/images:latest
     depends_on:
       - config-server
+      - mongodb
     ports:
       - '8092:8092'
 volumes:
