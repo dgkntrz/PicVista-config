@@ -34,7 +34,7 @@ services:
     ports:
       - '8091:8091'
     environment:
-      - SPRING_PROFILES_ACTIVE=images
+      - SPRING_PROFILES_ACTIVE=login
   images:
     image: turkuazsengul/images:latest
     depends_on:
@@ -42,5 +42,7 @@ services:
       - mongodb
     ports:
       - '8092:8092'
+    environment:
+      - SPRING_PROFILES_ACTIVE=images
 volumes:
   dbdata6:
