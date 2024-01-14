@@ -18,7 +18,7 @@ services:
       - ~/jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
-  config-server:
+  config:
     image: turkuazsengul/config-server:latest
     ports:
       - '8888:8888'
@@ -29,20 +29,14 @@ services:
   login:
     image: turkuazsengul/login:0.0.1
     depends_on:
-      - config-server
-      - mongodb
+      - config
     ports:
       - '8091:8091'
-    environment:
-      - SPRING_PROFILES_ACTIVE=login
   images:
     image: turkuazsengul/images:latest
     depends_on:
-      - config-server
-      - mongodb
+      - config
     ports:
       - '8092:8092'
-    environment:
-      - SPRING_PROFILES_ACTIVE=images
 volumes:
   dbdata6:
