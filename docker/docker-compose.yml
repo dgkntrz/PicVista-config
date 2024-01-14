@@ -6,14 +6,6 @@ services:
       - '27017:27017'
     volumes:
       - dbdata6:/data/db
-  front:
-    image: turkuazsengul/front:latest
-    ports:
-      - '3000:3000'
-  login:
-    image: turkuazsengul/login:latest
-    ports:
-      - '8091:8091'
   jenkins:
     image: jenkins/jenkins:lts
     privileged: true
@@ -26,5 +18,25 @@ services:
       - ~/jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
+  config-server:
+    image: turkuazsengul/config-server:latest
+    ports:
+      - '8888:8888'
+  front:
+    image: turkuazsengul/front:latest
+    ports:
+      - '3000:3000'
+  login:
+    image: turkuazsengul/login:latest
+    depends_on:
+      - config-server
+    ports:
+      - '8091:8091'
+  images:
+    image: turkuazsengul/images:latest
+    depends_on:
+      - config-server
+    ports:
+      - '8092:8092'
 volumes:
   dbdata6:
