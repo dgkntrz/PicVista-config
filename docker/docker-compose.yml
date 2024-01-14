@@ -27,7 +27,7 @@ services:
     ports:
       - '3000:3000'
   login:
-    image: turkuazsengul/login:latest
+    image: turkuazsengul/login:0.0.1
     depends_on:
       - config-server
       - mongodb
