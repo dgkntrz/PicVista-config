@@ -33,6 +33,8 @@ services:
       - mongodb
     ports:
       - '8091:8091'
+    environment:
+      - SPRING_PROFILES_ACTIVE=test
   images:
     image: turkuazsengul/images:latest
     depends_on:
