@@ -27,7 +27,7 @@ services:
     ports:
       - '3000:3000'
   login:
-    image: turkuazsengul/login:0.0.1
+    image: turkuazsengul/login:latest
     depends_on:
       - config
     ports:
