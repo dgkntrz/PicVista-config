@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   mongodb:
+    container_name: mongodb
     image: mongo:6-jammy
     ports:
       - '27017:27017'
@@ -18,24 +19,36 @@ services:
       - ~/jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/local/bin/docker:/usr/local/bin/docker
-  config:
+  config-server:
+    container_name: config-server
     image: turkuazsengul/config-server:latest
+    healthcheck:
+      test: curl --fail http://config-server:8888/login/login || exit 1
+      interval: 40s
+      timeout: 30s
+      retries: 1
+      start_period: 3s
     ports:
       - '8888:8888'
   front:
+    container_name: front
     image: turkuazsengul/front:latest
     ports:
       - '3000:3000'
   login:
+    container_name: login
     image: turkuazsengul/login:latest
     depends_on:
-      - config
+      config-server:
+        condition: service_healthy
     ports:
       - '8091:8091'
   images:
+    container_name: images
     image: turkuazsengul/images:latest
     depends_on:
-      - config
+      config-server:
+        condition: service_healthy
     ports:
       - '8092:8092'
 volumes:
